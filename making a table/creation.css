@@ -1,0 +1,36 @@
+/*
+   Creating a Table
+
+   Table Creation
+   Author: Nicholas Dhannie
+   Date:   6-10-2021
+
+   Filename:         creation.css
+   Supporting Files:
+
+*/
+
+table{
+	width:px;
+	border:5px outset gray;
+	padding:10px;
+	border-spacing:5px;
+}
+
+th{
+	text-align:center;
+}
+
+tr{
+	text-align:center;
+}
+
+th,td{
+	border:1px solid black;
+	padding:10px;
+}
+
+caption{
+	text-align:left;
+	text:bold;
+}
