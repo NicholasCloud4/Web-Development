@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+   <!--
+      New Perspectives on HTML and CSS
+      Tutorial 6
+      Case Problem 1
+
+      SBlogger News page
+      Author: Nicholas Dhannie
+      Date:   6-15-2021
+
+      Filename:         sblogger.htm
+      Supporting files: blog.css, comments.css, go.png, 
+                        modernizr-1.5.js, sblogo.jpg, stop.png
+   -->
+   
+	  <meta charset="UTF-8" />
+      <title>Form Test</title>
+      <script src="modernizr-1.5.js"></script>
+      <script src="formsubmit.js"></script>
+      <link href="layout.css" rel="stylesheet" type="text/css" />
+  
+  </head>
+   
+   <body>
+   <header>
+	<h1>FORM</h1>
+   </header>
+	<form action="" method="get">
+	<fieldset id="Form">
+		<label for="firstname">First Name:
+			<input type="firstname" name="firstname" id="firstname" title="Please type your firstname" required="required" placeholder="Tom"/>
+		</label>
+		<label for="firstname">Last Name:
+			<input type="lastname" name="lastname" id="lastname" title="Please type your lastname" required="required" placeholder="Smith"/>
+		</label>
+		<label for="password">Password<br>(Max 10 characters):
+			<input type="password" name="password" id="password" title="You must provide your password" required="required" maxlength="10" />
+		</label>
+		<label for="gender">Gender:<br>
+			Male<input type="radio" name="gender" id="male" />
+			Female<input type="radio" name="gender" id="female" />
+		</label>
+		<label for="color">Color Select:<br>
+			Red<input type="checkbox" name="red" id="color" />
+			White<input type="checkbox" name="white" id="color" />
+			Blue<input type="checkbox" name="blue" id="color" />
+		</label>
+		<label for="sports">Sports Select:
+			<select name="sports" />
+			<option value="Soccer">Soccer</option>
+			<option value="Basketball">Basketball</option>
+			<option value="Football">Football</option>
+			<option value="Cricket">Cricket</option>
+			<option value="Baseball">Baseball</option>
+			<option value="Volleyball">Volleyball</option>
+			<option value="Swimming">Swimming</option>
+			<option value="Table tennis">Table tennis</option>
+			<option value="Bowling">Bowling</option>
+			<option value="E-sports">E-sports</option>
+		</label>
+		<label for="file">
+			<input type="file" id="file" name="file" />
+		</label>
+		<label for="typebox">Please type about Global Warming:
+			<textarea name="typebox" id="typebox" rows="20" cols="50"></textarea>
+		</label>
+		<label>
+			<input type="submit" id="submit" value="Submit Form" />
+		</label>
+	</fieldset>
+	</form>
+	</body>
+		

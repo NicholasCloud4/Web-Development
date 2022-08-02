@@ -1,0 +1,54 @@
+/*
+   New Perspectives on HTML and CSS
+
+   Comment Form Style Sheet
+   Author: Nicholas Dhannie
+   Date:   6-18-2021
+
+   Filename:         layout.css
+   Supporting Files: 
+
+*/
+
+fieldset{
+	background-color:#9eadbd;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:auto;
+	margin-right:auto;
+	padding:5px;
+	width:95%;
+}
+
+label{
+	display:block;
+	clear:left;
+	float:left;
+	font-size:1em;
+	font-family:Arial, Helvetica, sans-serif;
+	width:100%;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+input,textarea{
+	display:block;
+	float:center;
+	font-size:0.9em;
+	width:55%;
+	margin-left:5px;
+	margin-right:5px;
+}
+
+input#file{
+	float:right;
+	margin-right:45px;
+}
+
+textarea#typebox{
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+header{
+	text-align:center;
+}
