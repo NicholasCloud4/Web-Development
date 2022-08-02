@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+   New Perspectives on HTML and CSS
+   Tutorial 8
+   Tutorial Case
+
+   CSS Demo
+   Author: Patrick Carey
+   Date:   3/1/2014
+
+   Filename:         demo_box_shadows.htm
+   Supporting files: demo.gif, demo2.gif
+-->
+<title>CSS box-shadow Style Demo</title>
+<style type="text/css">
+/* use for all demo pages */
+   html       {height: 100%}
+   body       {background-color: white; background-image: url(demo2.gif); margin: 0px; 
+               width: 100%; height: 100%}
+   #demo_page {background-color: white; 
+               border-right: 5px solid rgb(0,0,128); position: absolute; top: 0px; left: 0px;
+               width: 1000px; padding-bottom: 15px; min-height: 100%}
+   * html #demo_page {height: 100%}
+
+   #demo_intro {width: 100%; position: relative; margin: 0px 10px}
+   #demo_intro table {margin: 0px; padding: 0px; border: 0px; width: 97%}
+   #demo_intro table td {vertical-align: bottom; padding-bottom: 5px}
+   #h2heading {color:yellow; background-image: url(demo.gif); letter-spacing: 0.5em; 
+               font-family: Arial, Helvetica, sans-serif; width: 97%; 
+               font-size: 1.5em; margin: 0px; text-align: right; 
+               border: 1px solid black}
+
+   #para      {font-size: 1em; border: 1px solid black; width: 97%;
+               background-color: ivory}
+   #para p    {margin: 8px}
+
+   #demo_container {position: relative; top: 10px; left: 0px; width: 100%;
+                    margin: 0px 10px}
+   #demo_footer {text-align: center; font-size: 8pt; border-top: 1px solid black; 
+                 margin: 25px 10px; width: 97%; clear: left; position: relative;
+                 top: 10px; left: 0px}
+   span.btitle {font-style: italic}
+
+/* styles specific to this demo */
+   #demo_container table {float: left; width: 440px}
+   #styleoptions {font-family: Arial, Helvetica, sans-serif; font-size: 0.8em}
+
+   #fgred, #bgred, #sred {color: black; background-color: rgb(255, 155, 155); text-align: right}
+   #fggreen, #bggreen, #sgreen {color: black; background-color: rgb(155, 255, 155); text-align: right}
+   #fgblue, #bgblue, #sblue {color: black; background-color: rgb(155, 155, 255); text-align: right}
+
+   #output {width: 510px; float: left; margin-bottom: 10px}
+
+   #preview {width: 100%; height: 250px; border: 1px solid black; font-family: serif; 
+             font-size: 100px; font-family: serif; padding: 5px;
+             text-align: center; line-height: 250px;}
+   #previewstyle {width: 100%; border: 1px solid black; font-family: monospace; padding: 5px; font-size: 0.9em;}
+   #box {width: 60%; height: 60%; margin: 50px auto; border: 1px solid black;}
+   #demo_container h4 {color: white; background-color: black; margin-top: 0px; margin-bottom: 0px; width: 100%; 
+                       border: 1px solid black; padding: 5px; font-family: Arial, Helvetica, sans-serif}
+</style>
+
+<script type="text/javascript">
+
+
+
+
+function getBoxStyle(proparray){
+   var root=document.documentElement;
+   for (var i=0; i<proparray.length; i++){
+      if (typeof root.style[proparray[i]]=="string"){ 
+         return proparray[i];
+      }
+   }
+}
+
+function setstyles() {
+   styletable=document.stylelist;
+
+   previewObject=document.getElementById("box");
+
+   styletext="";
+
+   bgchange = false;
+   bgr=styletable.bgred.value; bgg=styletable.bggreen.value;    bgb=styletable.bgblue.value;
+   if (bgr != "255" || bgg != "255" || bgb != "255") 
+      {styletext +="background-color: rgb("+bgr+","+bgg+","+bgb+"); ";
+       bgchange = true;
+       previewObject.style.backgroundColor="rgb("+bgr+","+bgg+","+bgb+")";}
+   if (bgchange != true) previewObject.style.backgroundColor = "transparent";
+
+
+   bi=styletable.splace.selectedIndex;
+   bt=styletable.splace.options[bi].text;
+   if (bt != "default") {
+      boxtext="inset ";
+   } else {
+      boxtext="";
+   }
+   schange = false;
+   sr=styletable.sred.value; sg=styletable.sgreen.value; sb=styletable.sblue.value;
+
+   boxtext += "rgb("+sr+","+sg+","+sb+") ";
+
+   offsetx=styletable.offsetx.value;
+   boxtext+=offsetx+"px ";
+
+   offsety=styletable.offsety.value;
+   boxtext+=offsety+"px ";
+
+   sblur=styletable.sblur.value;
+   boxtext+=sblur+"px ";
+   spread=styletable.spread.value;
+   if (spread == "0") {
+      boxtext+="";
+   } else {
+      boxtext+=spread+"px";
+   }
+
+
+var bsProp=getBoxStyle(['boxShadow', 'MozBoxShadow', 'WebkitBoxShadow']);
+previewObject.style[bsProp]=boxtext;
+
+   styletext+="-moz-box-shadow: "+boxtext+";<br />webkit-box-shadow: "+boxtext+";<br />box-shadow: "+boxtext+";";
+   document.getElementById("previewstyle").innerHTML=styletext; 
+}
+
+</script>
+
+</head>
+
+<body>
+<form id="stylelist" name="stylelist">
+<div id="demo_page">
+
+<div id="demo_intro">
+   <table>
+   <tr><td style="width: 50%"><img src="cengage.jpg" alt="Course Technology Cengage Learning" /></td>
+       <td style="width: 50%; text-align:right; font-family: Arial, Helvetica, sans-serif; font-size: 14pt">
+          New Perspectives on HTML and CSS<br />Tutorial 8
+   </td></tr>
+   </table>
+
+   <h2 id="h2heading">CSS box-shadow style </h2>
+   <div id="para">
+      <p>This page demonstrates how to apply the CSS3 <code>box-shadow</code> style.
+         Use the input controls to specify the background color of the box in the 
+         Preview window. You can then apply a box shadow by specifying whether to
+         place the shadow outside the box (default) or within (inset) and setting 
+         shadow color, offset in the horizontal and vertical direction, blurring
+         size, and shadow spread. All distances are expressed in pixels. 
+         Press the <b>Tab</b> key to update the appearance
+         of the text shadow in the Preview box. 
+         The corresponding CSS3 style rule is displayed in the Style box.
+      </p>
+      <p>Note that Internet Explorer prior to Version 9 <b>does not support the <code>box-shadow</code> style.</b></p>
+   </div>
+</div>
+
+<div id="demo_container">
+
+   <table id="styleoptions">
+   <tr>
+      <td>background-color (rgb)</td>
+      <td>( <input type="text" name="bgred" id="bgred" size="3" value="255" onblur="setstyles()" /> , 
+            <input type="text" name="bggreen" id="bggreen" size="3" value="255" onblur="setstyles()" /> , 
+            <input type="text" name="bgblue" id="bgblue" size="3" value="255" onblur="setstyles()" /> )
+      </td>
+   </tr>
+
+   <tr>
+      <td>shadow placement</td>
+      <td><select name="splace" id="splace" onchange="setstyles()">
+             <option>default</option>
+             <option>inset</option>
+         </select>
+      </td>
+   </tr>
+
+   <tr>
+      <td>shadow color (rgb)</td>
+      <td>( <input type="text" name="sred" id="sred" size="3" value="0" onblur="setstyles()" /> , 
+            <input type="text" name="sgreen" id="sgreen" size="3" value="0" onblur="setstyles()" /> , 
+            <input type="text" name="sblue" id="sblue" size="3" value="0" onblur="setstyles()" /> )
+      </td>
+   </tr>
+
+   <tr>
+      <td>shadow offset x (px)</td>
+      <td><input type="text" name="offsetx" id="offsetx" size="10" value="0" onblur="setstyles()" type="number" />
+      </td>
+   </tr>
+
+   <tr>
+      <td>shadow offset y (px)</td>
+      <td><input type="text" name="offsety" id="offsety" size="10" value="0" onblur="setstyles()" type="number" />
+      </td>
+   </tr>
+
+   <tr>
+      <td>shadow blur (px)</td>
+      <td><input type="text" name="sblur" id="sblur" size="10" value="0" onblur="setstyles()" type="number" />
+      </td>
+   </tr>
+
+   <tr>
+      <td>shadow spread (px)</td>
+      <td><input type="text" name="spread" id="spread" size="10" value="0" onblur="setstyles()" type="number" />
+      </td>
+   </tr>
+
+   </table>
+
+   <div id="output">
+
+      <h4>Preview</h4>
+
+      <div id="preview">
+         <div id="box"></div>
+      </div>
+
+      <h4>Style</h4>
+  
+      <div id="previewstyle">
+         none
+      </div>
+
+   </div>
+</div>
+
+<div id="demo_footer">
+   Carey, P.
+   <span class="btitle">New Perspectives on HTML and CSS</span>,
+   Course Technology: Boston, 2012.
+</div>
+
+</div>
+</form>
+
+</body>
+</html>
+
+

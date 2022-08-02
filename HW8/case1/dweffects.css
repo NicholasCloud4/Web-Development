@@ -1,0 +1,34 @@
+/*
+   New Perspectives on HTML and CSS
+   Tutorial 8
+   Case Problem 1
+   Special Effects style sheet
+   Author: Nicholas Dhannie
+   Date:   6-28-2021
+
+   Filename:         dweffects.css
+   Supporting Files: 
+
+*/
+
+body{
+	box-shadow:rgb(211,211,211,0.5) 10px 0px 15px, rgb(211,211,211,0.5) -10px 0px 15px;
+}
+
+nav.horizontal li{
+	background-color:rgb(224,238,238);
+	border-radius:10px;
+	box-shadow:inset white 3px 3px 2px, inset rgb(147,207,207) -5px -5px 5px;
+}
+	
+article{
+	box-shadow:inset rgb(171,171,171) 15px 15px 75px, rgb(101,101,101) 5px 5px 5px;
+}
+
+blockquote{
+	background:linear-gradient(to right,rgb(166,230,230), rgb(231,231,231) 5%,
+			   rgb(255,255,255) 15%);
+	background:-webkit-linear-gradient(to right, rgb(166,230,230), rgb(231,231,231) 33%,
+	           rgb(255,255,255) 15%);
+}
+	

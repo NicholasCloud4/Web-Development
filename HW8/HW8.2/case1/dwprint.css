@@ -1,0 +1,46 @@
+/*
+   New Perspectives on HTML and CSS
+   Tutorial 8
+   Case Problem 1
+
+   dessertWeb Print Styles
+   Author: Nicholas Dhannie
+   Date:   6-30-2021
+
+   Filename:         dwprint.css
+   Supporting Files: 
+
+*/
+
+@page{
+	size:8.5in 11in portrait;
+	margin:0.5in;
+}
+
+header, section#left, section#right, nav, aside, footer, header h2, article .p{
+	display:none;
+}
+
+h1{
+	size:200%;
+	margin-bottom:0.2in;
+}
+	
+h2{
+	font-size:150%;
+	margin-top:0.5in;
+}
+
+li *{
+	line-height:1.5em;
+}
+
+ol *{
+	margin-left:0.5in;
+}
+
+h2{
+	page-break-before:always;
+}
+	
+

@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+   New Perspectives on HTML and CSS
+   Tutorial 8
+   Tutorial Case
+
+   IE Filters Demo
+   Author: Patrick Carey
+   Date:   3/1/2014
+
+   Filename:         demo_ie_filters.htm
+   Supporting files: demo.gif, demo2.gif, filter.png
+-->
+
+<title>IE Filter Style Demo</title>
+<style type="text/css">
+/* use for all demo pages */
+   html       {height: 100%}
+   body       {background-color: white; background-image: url(demo2.gif); margin: 0px; 
+               width: 100%; height: 100%}
+   #demo_page {background-color: white; 
+               border-right: 5px solid rgb(0,0,128); position: absolute; top: 0px; left: 0px;
+               width: 1000px; padding-bottom: 15px; min-height: 100%}
+   * html #demo_page {height: 100%}
+
+   #demo_intro {width: 100%; position: relative; margin: 0px 10px}
+   #demo_intro table {margin: 0px; padding: 0px; border: 0px; width: 97%}
+   #demo_intro table td {vertical-align: bottom; padding-bottom: 5px}
+   #h2heading {color:yellow; background-image: url(demo.gif); letter-spacing: 0.5em; 
+               font-family: Arial, Helvetica, sans-serif; width: 97%; 
+               font-size: 1.5em; margin: 0px; text-align: right; 
+               border: 1px solid black}
+
+   #para      {font-size: 1em; border: 1px solid black; width: 97%;
+               background-color: ivory}
+   #para p    {margin: 8px}
+
+   #demo_container {position: relative; top: 10px; left: 0px; width: 100%;
+                    margin: 0px 10px}
+   #demo_footer {text-align: center; font-size: 8pt; border-top: 1px solid black; 
+                 margin: 25px 10px; width: 97%; clear: left; position: relative;
+                 top: 10px; left: 0px}
+   span.btitle {font-style: italic}
+
+/* styles specific to this demo */
+   #demo_container table {float: left; width: 440px}
+   #styleoptions {font-family: Arial, Helvetica, sans-serif; font-size: 0.8em}
+
+
+   #output {width: 510px; float: left; margin-bottom: 10px;}
+   #filterimg {height: 200px; width: 143px; display: block; margin: 20px auto;
+               background-image: url(filter.png)}
+
+   #preview {width: 100%; height: 250px; border: 1px solid black; font-family: serif; 
+             font-size: 100px; font-family: serif; padding: 5px;
+             text-align: center; line-height: 250px;}
+   #previewstyle {width: 100%; border: 1px solid black; font-family: monospace; padding: 5px; font-size: 0.9em;}
+   #demo_container h4 {color: white; background-color: black; margin-top: 0px; margin-bottom: 0px; width: 100%; 
+                       border: 1px solid black; padding: 5px; font-family: Arial, Helvetica, sans-serif}
+</style>
+
+<script type="text/javascript">
+var ptext="";
+var ftext="";
+var nf;
+   function runFilter() {
+   nf=document.stylelist.Filters.value;
+   if (nf==99) ptext="";
+   else if (nf=="Alpha") {
+   ptext="<table cellpadding='5'><tr><td>style:</td>";
+   ptext+="<td><select name='p1' onChange='setOP()'>";
+   ptext+="<option value='0' selected>0 - Opacity</option>";
+   ptext+="<option value='1'>1 - Linear Opacity Change</option>";
+   ptext+="<option value='2'>2 - Radial Opacity Change</option>";
+   ptext+="<option value='3'>3 - Rectangular Opacity Change</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>opacity:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50' selected>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>"; 
+   ptext+="<tr><td>finishOpacity:</td>";
+   ptext+="<td><select name='p3' disabled onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100' selected>100</option>";
+   ptext+="</select></td></tr>"; 
+   ptext+="<tr><td>startX:</td>";
+   ptext+="<td><select name='p4' disabled onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>finishX:</td>";
+   ptext+="<td><select name='p5' disabled onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100' selected>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>startY:</td>";
+   ptext+="<td><select name='p6' disabled onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>finishY:</td>";
+   ptext+="<td><select name='p7' disabled onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100' selected>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="BasicImage") {
+   ptext="<table cellpadding='5'><tr><td>rotation:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0 - 0 degrees</option>";
+   ptext+="<option value='1'>1 - 90 degrees</option>";
+   ptext+="<option value='2'>2 - 180 degrees</option>";
+   ptext+="<option value='3'>3 - 270 degrees</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>mirror:</td>";
+   ptext+="<td><input type='checkbox' name='p2' onClick='applyF()' /></td></tr>"; 
+   ptext+="<tr><td>invert:</td>";
+   ptext+="<td><input type='checkbox' name='p3' onClick='applyF()' /></td></tr>"; 
+   ptext+="<tr><td>x-ray:</td>";
+   ptext+="<td><input type='checkbox' name='p4' onClick='applyF()' /></td></tr>"; 
+   ptext+="<tr><td>grayscale:</td>";
+   ptext+="<td><input type='checkbox' name='p5' onClick='applyF()' /></td></tr></table>";    
+   }
+   else if (nf=="Blur") {
+   ptext="<table cellpadding='5'><tr><td>PixelRadius:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>MakeShadow:</td>";
+   ptext+="<td><input type='checkbox' name='p2' onClick='setOP()' /></td></tr>"; 
+   ptext+="<tr><td>ShadowOpacity</td>";
+   ptext+="<td><select name='p3' disabled onChange='applyF()'>";
+   ptext+="<option value='0' selected>0.00</option>";
+   ptext+="<option value='0.10'>0.10</option>";
+   ptext+="<option value='0.20'>0.20</option>";
+   ptext+="<option value='0.30'>0.30</option>";
+   ptext+="<option value='0.40'>0.40</option>";
+   ptext+="<option value='0.50'>0.50</option>";
+   ptext+="<option value='0.60'>0.60</option>";
+   ptext+="<option value='0.70'>0.70</option>";
+   ptext+="<option value='0.80'>0.80</option>";
+   ptext+="<option value='0.90'>0.90</option>";
+   ptext+="<option value='1.00'>1.00</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Chroma" || nf=="Chroma4") {
+   ptext="<table cellpadding='5'><tr><td>Color:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='#731810'>Maroon (#731810)</option>";
+   ptext+="<option value='#ceced6'>Gray (#ceced6)</option>";
+   ptext+="<option value='#311808'>Brown (#311808)</option>";
+   ptext+="<option value='#312952' selected>Blue (#312952)</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="DropShadow" || nf=="DropShadow4") {
+   ptext="<table cellpadding='5'><tr><td>Color:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='#000000'>Black (#000000)</option>";
+   ptext+="<option value='#DDDDDD'>Light Gray (#DDDDDD)</option>";
+   ptext+="<option value='#999999' selected>Dark Gray (#999999)</option>";
+   ptext+="<option value='#FF0000'>Red (#FF0000)</option>";
+   ptext+="<option value='#00FF00'>Green (#00FF00)</option>";
+   ptext+="<option value='#0000FF'>Blue (#0000FF)</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>offX:</td>"; 
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='-30'>-30</option>";
+   ptext+="<option value='-25'>-25</option>";
+   ptext+="<option value='-20'>-20</option>";
+   ptext+="<option value='-15'>-15</option>";
+   ptext+="<option value='-10'>-10</option>";
+   ptext+="<option value='-9'>-9</option>";
+   ptext+="<option value='-8'>-8</option>";
+   ptext+="<option value='-7'>-7</option>";
+   ptext+="<option value='-6'>-6</option>";
+   ptext+="<option value='-5'>-5</option>";
+   ptext+="<option value='-4'>-4</option>";
+   ptext+="<option value='-3'>-3</option>";
+   ptext+="<option value='-2'>-2</option>";
+   ptext+="<option value='-1'>-1</option>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5' selected>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='25'>25</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>offY:</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='-30'>-30</option>";
+   ptext+="<option value='-25'>-25</option>";
+   ptext+="<option value='-20'>-20</option>";
+   ptext+="<option value='-15'>-15</option>";
+   ptext+="<option value='-10'>-10</option>";
+   ptext+="<option value='-9'>-9</option>";
+   ptext+="<option value='-8'>-8</option>";
+   ptext+="<option value='-7'>-7</option>";
+   ptext+="<option value='-6'>-6</option>";
+   ptext+="<option value='-5'>-5</option>";
+   ptext+="<option value='-4'>-4</option>";
+   ptext+="<option value='-3'>-3</option>";
+   ptext+="<option value='-2'>-2</option>";
+   ptext+="<option value='-1'>-1</option>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5' selected>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='25'>25</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Emboss" || nf=="Engrave") ptext="";
+   else if (nf=="Glow" || nf=="Glow4") {
+   ptext="<table cellpadding='5'><tr><td>Color:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='#FFFFFF'>White (#FFFFFF)</option>";
+   ptext+="<option value='#000000'>Black (#000000)</option>";
+   ptext+="<option value='#FF0000' selected>Red (#FF0000)</option>";
+   ptext+="<option value='#00FF00'>Green (#00FF00)</option>";
+   ptext+="<option value='#0000FF'>Blue (#0000FF)</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10' selected>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+  else if (nf=="Gradient") {
+   ptext="<table cellpadding='5'><tr><td>GradientType:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>StartColorStr:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='#FF00FF' selected>#FF00FF</option>";
+   ptext+="<option value='#006400' >#006400</option>";
+   ptext+="<option value='#0000FF' >#0000FF</option>";
+   ptext+="<option value='#FF8C00' >#FF8C00</option>";
+   ptext+="<option value='#00FF99' >#640000</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>EndColorStr:</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='#FF00FF'>#FF00FF</option>";
+   ptext+="<option value='#006400' >#006400</option>";
+   ptext+="<option value='#0000FF' >#0000FF</option>";
+   ptext+="<option value='#FF8C00' >#FF8C00</option>";
+   ptext+="<option value='#00FF99' selected>#640000</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Light (addAmbient)") {
+   ptext="<table cellpadding='5'><tr><td>Add Ambient Light (using JavaScript):</td></tr>";
+   ptext+="<tr><td>Color (red):</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192' selected>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (green):</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192'>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (blue):</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192' selected>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength (0-100):</td>";
+   ptext+="<td><select name='p4' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80' selected>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Light (addPoint)") {
+   ptext="<table cellpadding='5'><tr><td>Add Light Point (using JavaScript):</td></tr>";
+   ptext+="<tr><td>Source (x):</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='60' selected>60</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='140'>140</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='220'>220</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='260'>260</option>";
+   ptext+="<option value='280'>280</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Source (y):</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='150'>150</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='210'>210</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='270'>270</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="<option value='330'>330</option>";
+   ptext+="<option value='360'>360</option>";
+   ptext+="<option value='390'>390</option>";
+   ptext+="<option value='420'>420</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Source (z):</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='120' selected>120</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='200'>200</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (red):</td>";
+   ptext+="<td><select name='p4' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192' selected>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (green):</td>";
+   ptext+="<td><select name='p5' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192'>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (blue):</td>";
+   ptext+="<td><select name='p6' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192' selected>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength (0-100):</td>";
+   ptext+="<td><select name='p7' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80' selected>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Light (addCone)") {
+   ptext="<table cellpadding='5' width='370'><tr><td colspan='4'>Add Light Cone (using JavaScript):</td></tr>";
+   ptext+="<tr><td>Source (x):</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='60' selected>60</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='140'>140</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='220'>220</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='260'>260</option>";
+   ptext+="<option value='280'>280</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="</select></td>";
+   ptext+="<td>Focus (x):</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='140'>140</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='180' selected>180</option>";
+   ptext+="<option value='220'>220</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='260'>260</option>";
+   ptext+="<option value='280'>280</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Source (y):</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='150'>150</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='210'>210</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='270'>270</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="<option value='330'>330</option>";
+   ptext+="<option value='360'>360</option>";
+   ptext+="<option value='390'>390</option>";
+   ptext+="<option value='420'>420</option>";
+   ptext+="</select></td>";
+   ptext+="<td>Focus (y):</td>";
+   ptext+="<td><select name='p4' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='150' selected>150</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='210'>210</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='270'>270</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="<option value='330'>330</option>";
+   ptext+="<option value='360'>360</option>";
+   ptext+="<option value='390'>390</option>";
+   ptext+="<option value='420'>420</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Source (z):</td>";
+   ptext+="<td><select name='p5' onChange='applyF()'>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='120' selected>120</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='200'>200</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (red):</td>";
+   ptext+="<td><select name='p6' onChange='applyF()'>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192'>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (green):</td>";
+   ptext+="<td><select name='p7' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64'>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192' selected>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color (blue):</td>";
+   ptext+="<td><select name='p8' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='32'>32</option>";
+   ptext+="<option value='64' selected>64</option>";
+   ptext+="<option value='96'>96</option>";
+   ptext+="<option value='128'>128</option>";
+   ptext+="<option value='160'>160</option>";
+   ptext+="<option value='192'>192</option>";
+   ptext+="<option value='224'>224</option>";
+   ptext+="<option value='255'>255</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength (0-100):</td>";
+   ptext+="<td><select name='p9' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60' selected>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td>";
+   ptext+="<td>Spread (0-90):</td>";
+   ptext+="<td><select name='p10' onChange='applyF()'>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30' selected>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Matrix") {
+   ptext="<table cellpadding='5'><tr><td>Dx:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='-100'>-100</option>";
+   ptext+="<option value='-50'>-50</option>";
+   ptext+="<option value='-25'>-25</option>";
+   ptext+="<option value='-10'>-10</option>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='25'>25</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Dy:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='-100'>-100</option>";
+   ptext+="<option value='-50'>-50</option>";
+   ptext+="<option value='-25'>-25</option>";
+   ptext+="<option value='-10'>-10</option>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='25'>25</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>M11:</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='-2'>-2</option>";
+   ptext+="<option value='-1'>-1</option>";
+   ptext+="<option value='-0.5'>-0.5</option>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='0.5'>0.5</option>";
+   ptext+="<option value='1' selected>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>M12:</td>";
+   ptext+="<td><select name='p4' onChange='applyF()'>";
+   ptext+="<option value='-2'>-2</option>";
+   ptext+="<option value='-1'>-1</option>";
+   ptext+="<option value='-0.5'>-0.5</option>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='0.5'>0.5</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>M21:</td>";
+   ptext+="<td><select name='p5' onChange='applyF()'>";
+   ptext+="<option value='-2'>-2</option>";
+   ptext+="<option value='-1'>-1</option>";
+   ptext+="<option value='-0.5'>-0.5</option>";
+   ptext+="<option value='0' selected>0</option>";
+   ptext+="<option value='0.5'>0.5</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>M22:</td>";
+   ptext+="<td><select name='p6' onChange='applyF()'>";
+   ptext+="<option value='-2'>-2</option>";
+   ptext+="<option value='-1'>-1</option>";
+   ptext+="<option value='-0.5'>-0.5</option>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='0.5'>0.5</option>";
+   ptext+="<option value='1' selected>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>SizingMethod:</td>";
+   ptext+="<td><select name='p7' onChange='applyF()'>";
+   ptext+="<option value='clip to original'>clip to original</option>";
+   ptext+="<option value='auto expand' selected>auto expand</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="MotionBlur") {
+   ptext="<table cellpadding='5'><tr><td>Direction:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='45' selected>45</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='135'>135</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='225'>225</option>";
+   ptext+="<option value='270'>270</option>";
+   ptext+="<option value='315'>315</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='10' selected>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+  else if (nf=="Pixelate") {
+   ptext="<table cellpadding='5'><tr><td>MaxSquare:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='2' selected>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="</select></td></tr></table>";
+   }
+  else if (nf=="Shadow") {
+   ptext="<table cellpadding='5'><tr><td>Direction:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='45' selected>45</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='135'>135</option>";
+   ptext+="<option value='150'>150</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='210'>210</option>";
+   ptext+="<option value='225'>225</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='270'>270</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="<option value='315'>315</option>";
+   ptext+="<option value='330'>330</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10' selected>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Color:</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='#000000'>Black (#000000)</option>";
+   ptext+="<option value='#DDDDDD'>Light Gray (#DDDDDD)</option>";
+   ptext+="<option value='#999999' selected>Dark Gray (#999999)</option>";
+   ptext+="<option value='#FF0000'>Red (#FF0000)</option>";
+   ptext+="<option value='#00FF00'>Green (#00FF00)</option>";
+   ptext+="<option value='#0000FF'>Blue (#0000FF)</option>";
+   ptext+="</select></td></tr></table>";
+   }
+  else if (nf=="Wave") {
+   ptext="<table cellpadding='5'><tr><td>Freq:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3' selected>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='12'>12</option>";
+   ptext+="<option value='24'>24</option>";
+   ptext+="<option value='48'>48</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>LightStrength:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30' selected>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='75'>75</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Phase:</td>";
+   ptext+="<td><select name='p3' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10' selected>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength:</td>";
+   ptext+="<td><select name='p4' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10' selected>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='25'>25</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='75'>75</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Alpha4") {
+   ptext="<table cellpadding='5'><tr><td>Opacity</td>";
+  ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='10'>10</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50' selected>50</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='70'>70</option>";
+   ptext+="<option value='80'>80</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="Blur4") {
+   ptext="<table cellpadding='5'><tr><td>Direction:</td>";
+   ptext+="<td><select name='p1' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='45' selected>45</option>";
+   ptext+="<option value='60'>60</option>";
+   ptext+="<option value='90'>90</option>";
+   ptext+="<option value='120'>120</option>";
+   ptext+="<option value='135'>135</option>";
+   ptext+="<option value='150'>150</option>";
+   ptext+="<option value='180'>180</option>";
+   ptext+="<option value='210'>210</option>";
+   ptext+="<option value='225'>225</option>";
+   ptext+="<option value='240'>240</option>";
+   ptext+="<option value='270'>270</option>";
+   ptext+="<option value='300'>300</option>";
+   ptext+="<option value='315'>315</option>";
+   ptext+="<option value='330'>330</option>";
+   ptext+="</select></td></tr>";
+   ptext+="<tr><td>Strength:</td>";
+   ptext+="<td><select name='p2' onChange='applyF()'>";
+   ptext+="<option value='0'>0</option>";
+   ptext+="<option value='1'>1</option>";
+   ptext+="<option value='2'>2</option>";
+   ptext+="<option value='3'>3</option>";
+   ptext+="<option value='4'>4</option>";
+   ptext+="<option value='5'>5</option>";
+   ptext+="<option value='6'>6</option>";
+   ptext+="<option value='7'>7</option>";
+   ptext+="<option value='8'>8</option>";
+   ptext+="<option value='9'>9</option>";
+   ptext+="<option value='10' selected>10</option>";
+   ptext+="<option value='15'>15</option>";
+   ptext+="<option value='20'>20</option>";
+   ptext+="<option value='30'>30</option>";
+   ptext+="<option value='40'>40</option>";
+   ptext+="<option value='50'>50</option>";
+   ptext+="<option value='100'>100</option>";
+   ptext+="</select></td></tr></table>";
+   }
+   else if (nf=="FlipH4" || nf=="FlipV4" || nf=="Gray4" || nf=="Invert4" || nf=="Xray4") ptext="";
+   param.innerHTML=ptext;
+   applyF();
+}
+
+function setOP() {
+   if (nf=="Alpha") {
+      if (document.stylelist.p1.value==0) {
+         document.stylelist.p3.disabled=true;
+         document.stylelist.p4.disabled=true;
+         document.stylelist.p5.disabled=true;
+         document.stylelist.p6.disabled=true;
+         document.stylelist.p7.disabled=true;
+      }
+      else if (document.stylelist.p1.value==1) {
+         document.stylelist.p3.disabled=false;
+         document.stylelist.p4.disabled=false;
+         document.stylelist.p5.disabled=false;
+         document.stylelist.p6.disabled=false;
+         document.stylelist.p7.disabled=false;
+      }
+      else if (document.stylelist.p1.value >=2) {
+         document.stylelist.p3.disabled=false;
+         document.stylelist.p4.disabled=true;
+         document.stylelist.p5.disabled=true;
+         document.stylelist.p6.disabled=true;
+         document.stylelist.p7.disabled=true;
+      }
+   }
+   else if (nf=="Blur") {
+      if (document.stylelist.p2.checked) document.stylelist.p3.disabled=false;
+      else document.stylelist.p3.disabled=true;
+   }
+   applyF();
+}
+
+function applyF() {
+   f_string=document.getElementById("previewstyle");
+   filter_image=document.getElementById("filterimg");
+
+   filternum=document.stylelist.Filters.selectedIndex;
+   if (filternum==0) ftext="";
+   else if (filternum <=17) ftext="progid:DXImageTransform.Microsoft.";
+   else if (filternum >17) ftext="";
+   if (nf=="Alpha") {
+      ftext+="Alpha(";
+      if (document.stylelist.p1.disabled==false) ftext+="style="+document.stylelist.p1.value;
+      if (document.stylelist.p2.disabled==false) ftext+=", opacity="+document.stylelist.p2.value;
+      if (document.stylelist.p3.disabled==false) ftext+=", finishOpacity="+document.stylelist.p3.value;
+      if (document.stylelist.p4.disabled==false) ftext+=", startX="+document.stylelist.p4.value;
+      if (document.stylelist.p5.disabled==false) ftext+=", finishX="+document.stylelist.p5.value;
+      if (document.stylelist.p6.disabled==false) ftext+=", startY="+document.stylelist.p6.value;
+      if (document.stylelist.p7.disabled==false) ftext+=", finishY="+document.stylelist.p7.value
+      ftext+=")";
+   }
+   else if (nf=="BasicImage") {
+      Mcheck=0; Icheck=0; Xcheck=0; Gcheck=0;
+      if (document.stylelist.p2.checked) Mcheck=1;
+      if (document.stylelist.p3.checked) Icheck=1;
+      if (document.stylelist.p4.checked) Xcheck=1;
+      if (document.stylelist.p5.checked) Gcheck=1;
+      ftext+="BasicImage(";
+      ftext+="Rotation="+document.stylelist.p1.value+",";
+      ftext+="Mirror="+Mcheck+",";
+      ftext+="Invert="+Icheck+",";
+      ftext+="XRay="+Xcheck+",";
+      ftext+="Grayscale="+Gcheck+")";
+   }
+   else if (nf=="Blur") {
+      Scheck="false";
+      if (document.stylelist.p2.checked) Scheck="true";
+      ftext+="Blur(";
+      ftext+="PixelRadius="+document.stylelist.p1.value;
+      ftext+=", MakeShadow="+Scheck;
+      if (document.stylelist.p3.disabled==false) ftext+=", ShadowOpacity="+document.stylelist.p3.value;
+      ftext+=")";
+   }
+   else if (nf=="Chroma" || nf=="Chroma4") {
+      ftext+="Chroma(";
+      ftext+="Color="+document.stylelist.p1.value+")";
+   }
+   else if (nf=="DropShadow") {
+      ftext+="DropShadow(";
+      ftext+="Color="+document.stylelist.p1.value;
+      ftext+=", offX="+document.stylelist.p2.value;
+      ftext+=", offY="+document.stylelist.p3.value+")";
+   }
+   else if (nf=="Emboss") ftext+="Emboss()";
+   else if (nf=="Engrave") ftext+="Engrave()";
+   else if (nf=="Glow") {
+      ftext+="Glow(";
+      ftext+="Color="+document.stylelist.p1.value;
+      ftext+=", strength="+document.stylelist.p2.value+")";
+   }
+   else if (nf=="Gradient") {
+      ftext+="Gradient(";
+      ftext+="gradientType="+document.stylelist.p1.value;
+      ftext+=", startColorStr="+document.stylelist.p2.value;
+      ftext+=", endColorStr="+document.stylelist.p3.value+")";
+   }
+   else if (nf=="Light (addAmbient)" || nf=="Light (addPoint)" || nf=="Light (addCone)") {
+      ftext+="Light()";
+   }
+   else if (nf=="Matrix") {
+      ftext+="Matrix(";
+      ftext+="Dx="+document.stylelist.p1.value;
+      ftext+=", Dy="+document.stylelist.p2.value;
+      ftext+=", M11="+document.stylelist.p3.value;
+      ftext+=", M12="+document.stylelist.p4.value;
+      ftext+=", M21="+document.stylelist.p5.value;
+      ftext+=", M22="+document.stylelist.p6.value;
+      ftext+=", SizingMethod='"+document.stylelist.p7.value+"')";
+   }
+   else if (nf=="MotionBlur") {
+      ftext+="MotionBlur(";
+      ftext+="direction="+document.stylelist.p1.value;
+      ftext+=", strength="+document.stylelist.p2.value+")";
+   }
+   else if (nf=="Pixelate") ftext+="Pixelate(maxSquare="+document.stylelist.p1.value+")";
+   else if (nf=="Shadow") {
+      ftext+="Shadow(";
+      ftext+="direction="+document.stylelist.p1.value;
+      ftext+=", strength="+document.stylelist.p2.value;
+      ftext+=", color="+document.stylelist.p3.value+")";
+   }
+   else if (nf=="Wave") {
+      ftext+="Wave(";
+      ftext+="freq="+document.stylelist.p1.value;
+      ftext+=", lightStrength="+document.stylelist.p2.value;
+      ftext+=", phase="+document.stylelist.p3.value;
+      ftext+=", strength="+document.stylelist.p4.value+")";
+   }
+   else if (nf=="Alpha4") {
+      ftext+="Alpha(";
+      ftext+="opacity="+document.stylelist.p1.value+")";
+   }
+   else if (nf=="Blur4") {
+      ftext+="Blur(";
+      ftext+="direction="+document.stylelist.p1.value;
+      ftext+=", strength="+document.stylelist.p2.value+")";
+   }
+   else if (nf=="FlipV4") ftext+="FlipV()";
+   else if (nf=="FlipH4") ftext+="FlipH()";
+   else if (nf=="Gray4") ftext+="Gray()";
+   else if (nf=="Invert4") ftext+="Invert()";
+   else if (nf=="Xray4") ftext+="Xray()";
+
+  if (nf =="Light (addAmbient)") {
+      filter_image.style.filter="";
+      filter_image.style.filter=ftext;
+      ftext+="<br>JavaScript:filter_image.filters[0].addAmbient(";
+      ired=eval(document.stylelist.p1.value);
+      igreen=eval(document.stylelist.p2.value)
+      iblue=eval(document.stylelist.p3.value);
+      istrength=eval(document.stylelist.p4.value);
+      ftext+=ired+","+igreen+","+iblue+","+istrength+")";
+      
+      f_string.innerHTML=ftext;
+      filter_image.filters[0].addAmbient(ired,igreen,iblue,istrength);
+  } else if (nf =="Light (addPoint)") {
+      filter_image.style.filter="";
+      filter_image.style.filter=ftext;
+      ftext+="<br>JavaScript:filter_image.filters[0].addPoint(";
+      x1=eval(document.stylelist.p1.value);
+      y1=eval(document.stylelist.p2.value)
+      z1=eval(document.stylelist.p3.value);
+      ired=eval(document.stylelist.p4.value);
+      igreen=eval(document.stylelist.p5.value);
+      iblue=eval(document.stylelist.p6.value);
+      istrength=eval(document.stylelist.p7.value);
+      ftext+=x1+","+y1+","+z1+","+ired+","+igreen+","+iblue+","+istrength+")";
+      
+      f_string.innerHTML=ftext;
+      filter_image.filters[0].addPoint(x1,y1,z1,ired,igreen,iblue,istrength);
+   } else if (nf == "Light (addCone)") {
+      filter_image.style.filter="";
+      filter_image.style.filter=ftext;
+      ftext+="<br>JavaScript:filter_image.filters[0].addCone(";
+      x1=eval(document.stylelist.p1.value);
+      y1=eval(document.stylelist.p3.value)
+      z1=eval(document.stylelist.p5.value);
+      x2=eval(document.stylelist.p2.value);
+      y2=eval(document.stylelist.p4.value);
+      ired=eval(document.stylelist.p6.value);
+      igreen=eval(document.stylelist.p7.value);
+      iblue=eval(document.stylelist.p8.value);
+      strength=eval(document.stylelist.p9.value);
+      spread=eval(document.stylelist.p10.value);
+       ftext+=x1+","+y1+","+z1+","+x2+","+y2+","+ired+","+igreen+","+iblue+","+strength+","+spread+")";
+      
+      f_string.innerHTML=ftext;
+      filter_image.filters[0].addCone(x1,y1,z1,x2,y2,ired,igreen,iblue,strength,spread);
+   } else {
+      filter_image.style.filter=ftext;
+      if (ftext !="") f_string.innerText="filter: "+ftext;
+      else f_string.innerText="";
+   }
+
+}
+
+</script>
+
+
+</head>
+
+
+<body>
+<form id="stylelist" name="stylelist">
+<div id="demo_page">
+
+<div id="demo_intro">
+   <table>
+   <tr><td style="width: 50%"><img src="cengage.jpg" alt="Course Technology Cengage Learning" /></td>
+       <td style="width: 50%; text-align:right; font-family: Arial, Helvetica, sans-serif; font-size: 14pt">
+          New Perspectives on HTML and CSS<br />Tutorial 8
+   </td></tr>
+   </table>
+
+   <h2 id="h2heading">IE Filter Styles </h2>
+   <div id="para">
+      <p>Internet Explorer supports a wide variety of filters that you can use to add interesting visual 
+         effects to elements in your Web pages. There are two types of filter styles: those associated 
+         with IE 4.0 and those associated with IE 5.5 and above. Choose the filter style you want to 
+         apply from the list box. You can then select the parameter values for the selected filter
+         from the appropriate list boxes. The filter effect will be applied to the image in the Preview 
+         box each time you select a parameter value. The corresponding filter style is displayed in 
+         the Style box.</p>
+   </div>
+</div>
+
+<div id="demo_container">
+
+<table width="350">
+<tr><td valign="top" colspan="2">
+<h2>
+ Filter Parameters</h2>
+</td></tr>
+<tr>
+<td valign="top">Filter Type:</td>
+<td valign="top">
+<select name="Filters" onChange="runFilter()">
+   <option value="99">--- Select a filter ---</option>
+   <optgroup label="IE 5.5 Filters">
+   <option value="Alpha">Alpha</option>
+   <option value="BasicImage">BasicImage</option>
+   <option value="Blur">Blur</option>
+   <option value="Chroma">Chroma</option>
+   <option value="DropShadow">DropShadow</option>
+   <option value="Emboss">Emboss</option>
+   <option value="Engrave">Engrave</option>
+   <option value="Glow">Glow</option>
+   <option value="Gradient">Gradient</option>
+   <option value="Light (addAmbient)">Light (addAmbient)</option>
+   <option value="Light (addPoint)">Light (addPoint)</option>
+   <option value="Light (addCone)">Light (addCone)</option>
+   <option value="Matrix">Matrix</option>
+   <option value="MotionBlur">MotionBlur</option>
+   <option value="Pixelate">Pixelate</option>
+   <option value="Shadow">Shadow</option>
+   <option value="Wave">Wave</option>
+   </optgroup>
+   <optgroup label="IE 4.0 Filters">
+   <option value="Alpha4">Alpha</option>
+   <option value="Blur4">Blur</option>
+   <option value="Chroma4">Chroma</option>
+   <option value="FlipH4">FlipH</option>
+   <option value="FlipV4">FlipV</option>
+   <option value="Gray4">Gray</option>
+   <option value="Invert4">Invert</option>
+   <option value="Xray4">Xray</option>
+   </optgroup>
+</select>
+</td>
+<tr><td colspan="2"><hr /></td></tr>
+<tr><td colspan="2"><div id="param"></div></td></tr>
+</table>
+
+
+   <div id="output">
+
+      <h4>Preview</h4>
+
+      <div id="preview">
+         <div id="filterimg"></div>
+      </div>
+
+      <h4>Style</h4>
+  
+      <div id="previewstyle">
+         none
+      </div>
+
+   </div>
+</div>
+
+<div id="demo_footer">
+   Carey, P.
+   <span class="btitle">New Perspectives on HTML and CSS</span>,
+   Course Technology: Boston, 2012.
+</div>
+
+</div>
+</form>
+
+</body>
+</html>
+

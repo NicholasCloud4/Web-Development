@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+   New Perspectives on HTML and CSS
+   Tutorial 8
+   Tutorial Case
+
+   CSS Repeating Linear Gradients Demo
+   Author: Patrick Carey
+   Date:   3/1/2014
+
+   Filename:         demo_repeat_linear_gradients.htm
+   Supporting files: demo.gif, demo2.gif
+-->
+<title>CSS Demo Repeating Linear Gradient Style</title>
+<style type="text/css">
+/* use for all demo pages */
+   html       {height: 100%}
+   body       {background-color: white; background-image: url(demo2.gif); margin: 0px; 
+               width: 100%; height: 100%}
+   #demo_page {background-color: white; 
+               border-right: 5px solid rgb(0,0,128); position: absolute; top: 0px; left: 0px;
+               width: 1000px; padding-bottom: 15px; min-height: 100%}
+   * html #demo_page {height: 100%}
+
+   #demo_intro {width: 100%; position: relative; margin: 0px 10px}
+   #demo_intro table {margin: 0px; padding: 0px; border: 0px; width: 97%}
+   #demo_intro table td {vertical-align: bottom; padding-bottom: 5px}
+   #h2heading {color:yellow; background-image: url(demo.gif); letter-spacing: 0.5em; 
+               font-family: Arial, Helvetica, sans-serif; width: 97%; 
+               font-size: 1.5em; margin: 0px; text-align: right; 
+               border: 1px solid black}
+
+   #para      {font-size: 1em; border: 1px solid black; width: 97%;
+               background-color: ivory}
+   #para p    {margin: 8px}
+
+   #demo_container {position: relative; top: 10px; left: 0px; width: 100%;
+                    margin: 0px 10px}
+   #demo_footer {text-align: center; font-size: 8pt; border-top: 1px solid black; 
+                 margin: 25px 10px; width: 97%; clear: left; position: relative;
+                 top: 10px; left: 0px}
+   span.btitle {font-style: italic}
+
+/* styles specific to this demo */
+   #demo_container table {float: left; width: 440px}
+   #styleoptions {font-family: Arial, Helvetica, sans-serif; font-size: 0.8em}
+   th, td {vertical-align: top;}
+   input.preview {background-color: white;}
+   input.red {color: black; background-color: rgb(255, 155, 155); text-align: right}
+   input.green {color: black; background-color: rgb(155, 255, 155); text-align: right}
+   input.blue {color: black; background-color: rgb(155, 155, 255); text-align: right}
+
+   #output {width: 510px; float: left; margin-bottom: 10px}
+
+   #preview {width: 100%; height: 250px; border: 1px solid black; 
+             padding: 5px;
+   }
+   #previewstyle {width: 100%; border: 1px solid black; font-family: monospace; padding: 5px; font-size: 0.9em;}
+   #demo_container h4 {color: white; background-color: black; margin-top: 0px; margin-bottom: 0px; width: 100%; 
+                       border: 1px solid black; padding: 5px; font-family: Arial, Helvetica, sans-serif}
+</style>
+
+<script type="text/javascript">
+
+
+
+
+function gVS(fid) {
+   var fIndex=document.forms[0].elements[fid].selectedIndex;
+   var fVal=document.forms[0].elements[fid].options[fIndex].value;
+   return fVal;
+}
+
+function gV(fid) {
+   var fVal=document.getElementById(fid).value;
+   return fVal;
+}
+
+function setstyles() {
+   styletable=document.stylelist;
+   previewObject=document.getElementById("preview");
+
+   var lgtext="repeating-linear-gradient(";
+
+   var startPos="";
+   if (gVS("x1p")!="" || gV("y1p")!="") {
+      startPos+=gVS("x1p")+" "+gVS("y1p");
+   } else {
+      if (gV("angle")!="") startPos+=gV("angle")+"deg ";
+   }
+
+   lgtext+=startPos;
+
+   if (startPos !="") lgtext+=",";
+
+   if ((gV("red1")!= "") && (gV("green1")!="") && (gV("blue1")!="")) {
+      lgtext+="rgb("+gV("red1")+","+gV("green1")+","+gV("blue1")+") ";
+      document.getElementById("preview1").style.backgroundColor="rgb("+gV("red1")+","+gV("green1")+","+gV("blue1")+")";
+
+      if (gV("p1")!="") {
+         if (gVS("punit1")!="") lgtext+=gV("p1")+gVS("punit1")
+         else lgtext+=gV("p1")+"px";
+      }
+   }
+
+   if ((gV("red2")!= "") && (gV("green2")!="") && (gV("blue2")!="")) {
+      lgtext+=", rgb("+gV("red2")+","+gV("green2")+","+gV("blue2")+") ";
+      document.getElementById("preview2").style.backgroundColor="rgb("+gV("red2")+","+gV("green2")+","+gV("blue2")+")";
+
+      if (gV("p2")!="") {
+         if (gVS("punit2")!="") lgtext+=gV("p2")+gVS("punit2")
+         else lgtext+=gV("p2")+"px";
+      }
+   }
+
+   if ((gV("red3")!= "") && (gV("green3")!="") && (gV("blue3")!="")) {
+      lgtext+=", rgb("+gV("red3")+","+gV("green3")+","+gV("blue3")+") ";
+      document.getElementById("preview3").style.backgroundColor="rgb("+gV("red3")+","+gV("green3")+","+gV("blue3")+")";
+
+      if (gV("p3")!="") {
+         if (gVS("punit3")!="") lgtext+=gV("p3")+gVS("punit3")
+         else lgtext+=gV("p3")+"px";
+      }
+   }
+
+   if ((gV("red4")!= "") && (gV("green4")!="") && (gV("blue4")!="")) {
+      lgtext+=", rgb("+gV("red4")+","+gV("green4")+","+gV("blue4")+") ";
+      document.getElementById("preview4").style.backgroundColor="rgb("+gV("red4")+","+gV("green4")+","+gV("blue4")+")";
+
+      if (gV("p4")!="") {
+         if (gVS("punit4")!="") lgtext+=gV("p4")+gVS("punit4")
+         else lgtext+=gV("p4")+"px";
+      }
+   }
+
+
+   if ((gV("red5")!= "") && (gV("green5")!="") && (gV("blue5")!="")) {
+      lgtext+=", rgb("+gV("red5")+","+gV("green5")+","+gV("blue5")+") ";
+      document.getElementById("preview5").style.backgroundColor="rgb("+gV("red5")+","+gV("green5")+","+gV("blue5")+")";
+
+      if (gV("p5")!="") {
+         if (gVS("punit5")!="") lgtext+=gV("p5")+gVS("punit5")
+         else lgtext+=gV("p5")+"px";
+      }
+   }
+
+
+   lgtext+=")";
+   stext="background: -o-"+lgtext+"; ";
+   stext+="background: -ms-"+lgtext+"; ";
+   stext+="background: -moz-"+lgtext+"; ";
+   stext+="background: -webkit-"+lgtext+"; ";
+   stext+="background: "+lgtext+"; ";
+
+   stext2="background: -o-"+lgtext+"; <br /><br />";
+   stext2+="background: -ms-"+lgtext+"; <br /><br />";
+   stext2+="background: -moz-"+lgtext+"; <br /><br />";
+   stext2+="background: -webkit-"+lgtext+"; <br /><br />";
+   stext2+="background: "+lgtext+"; ";
+
+
+   previewObject.setAttribute("style", stext);
+
+   document.getElementById("previewstyle").innerHTML=stext2; 
+}
+
+</script>
+
+</head>
+
+<body>
+<form id="stylelist" name="stylelist">
+<div id="demo_page">
+
+<div id="demo_intro">
+   <table>
+   <tr><td style="width: 50%"><img src="cengage.jpg" alt="Course Technology Cengage Learning" /></td>
+       <td style="width: 50%; text-align:right; font-family: Arial, Helvetica, sans-serif; font-size: 14pt">
+          New Perspectives on HTML and CSS<br />Tutorial 8
+   </td></tr>
+   </table>
+
+   <h2 id="h2heading">Repeating Linear Gradients </h2>
+   <div id="para">
+      <p>This demo shows how to create a repeating linear gradient using the CSS3 <code>repeating-linear-gradient()</code>
+         function. The syntax of the function is:
+      </p>
+      <p>
+         <code>repeating-linear-gradient(<i>position</i> || <i>angle</i>, <i>color-stop</i>, <i>color-stop</i> ...)</code>
+      </p>
+      <p>where <i>position</i> is the starting position of the gradient, <i>angle</i> is the angle of the
+         gradient across the object background, and <i>color-stop</i> are the colors and positions of each
+         color in the gradient. In order for the linear gradient to be repeated, the position of the last
+         color stop must lie within the object background. For example, to repeat the pattern 5 times, set
+         the position of the last color stop to 20%.
+      </p>
+      <p>To use the demo, enter the starting position <i>or</i> the angle of the gradient and specify the
+         RGB color value and position of each color. 
+         Press the Tab key to display the current parameter values.
+         Positions can be expressed in pixels or percentages.
+         If you omit the starting position, the gradient will start from the top and move down. Up to 
+         five different colors can be specified. You must specify at least two color values.
+      </p>
+      <p>Note that the <code>repeating-linear-gradient()</code> function is supported by: Internet Explorer version 10 and higher, Opera version 11.1 and higher, Chrome version 10 and higher, Safari version 4 and higher, and Firefox version 3.6 and higher.</p>
+   </div>
+</div>
+
+<div id="demo_container">
+
+   <table id="styleoptions">
+   <tr>
+      <td>Starting Position</td>
+      <td><select name="x1p" id="x1p" onchange="setstyles()">
+             <option value=""></option>
+             <option value="left">left</option>
+             <option value="right">right</option>
+          </select>
+          <select name="y1p" id="y1p" onchange="setstyles()">
+             <option value=""></option>
+             <option value="top">top</option>
+             <option value="bottom">bottom</option>
+          </select>
+          <br />
+          or specify the starting angle
+      </td>
+    </tr>
+    <tr>
+      <td>
+          Angle (deg)
+      </td>
+      <td>
+          <input name="angle" id="angle" size="3" onblur="setstyles()"  />
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 1: (rgb)</td>
+      <td>( <input type="text" name="red1" id="red1" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green1" id="green1" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue1" id="blue1" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview1" id="preview1" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p1" id="p1" size="3" onblur="setstyles()" />
+          <select name="punit1" id="punit1"onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 2: (rgb)</td>
+      <td>( <input type="text" name="red2" id="red2" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green2" id="green2" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue2" id="blue2" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview2" id="preview2" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p2" id="p2" size="3" onblur="setstyles()" />
+          <select name="punit2" id="punit2"onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 3: (rgb)</td>
+      <td>( <input type="text" name="red3" id="red3" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green3" id="green3" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue3" id="blue3" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview3" id="preview3" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p3" id="p3" size="3" onblur="setstyles()" />
+          <select name="punit3" id="punit3" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 4: (rgb)</td>
+      <td>( <input type="text" name="red4" id="red4" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green4" id="green4" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue4" id="blue4" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview4" id="preview4" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p4" id="p4" size="3" onblur="setstyles()" />
+          <select name="punit4" id="punit4" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 5: (rgb)</td>
+      <td>( <input type="text" name="red5" id="red5" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green5" id="green5" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue5" id="blue5" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview5" id="preview5" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p5" id="p5" size="3" onblur="setstyles()" />
+          <select name="punit5" id="punit5" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   </table>
+
+   <div id="output">
+
+      <h4>Preview</h4>
+
+      <div id="preview">
+      </div>
+
+      <h4>Style</h4>
+  
+      <div id="previewstyle">
+         none
+      </div>
+
+   </div>
+</div>
+
+<div id="demo_footer">
+   Carey, P.
+   <span class="btitle">New Perspectives on HTML and CSS</span>,
+   Course Technology: Boston, 2012.
+</div>
+
+</div>
+</form>
+
+</body>
+</html>
+
+

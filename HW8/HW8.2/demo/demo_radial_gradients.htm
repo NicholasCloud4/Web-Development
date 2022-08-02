@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+   New Perspectives on HTML and CSS
+   Tutorial 8
+   Tutorial Case
+
+   CSS Radial Gradients Demo
+   Author: Patrick Carey
+   Date:   3/1/2014
+
+   Filename:         demo_linear_gradients.htm
+   Supporting files: demo.gif, demo2.gif
+-->
+<title>CSS Demo Radial  Gradient Style</title>
+<style type="text/css">
+/* use for all demo pages */
+   html       {height: 100%}
+   body       {background-color: white; background-image: url(demo2.gif); margin: 0px; 
+               width: 100%; height: 100%}
+   #demo_page {background-color: white; 
+               border-right: 5px solid rgb(0,0,128); position: absolute; top: 0px; left: 0px;
+               width: 1000px; padding-bottom: 15px; min-height: 100%}
+   * html #demo_page {height: 100%}
+
+   #demo_intro {width: 100%; position: relative; margin: 0px 10px}
+   #demo_intro table {margin: 0px; padding: 0px; border: 0px; width: 97%}
+   #demo_intro table td {vertical-align: bottom; padding-bottom: 5px}
+   #h2heading {color:yellow; background-image: url(demo.gif); letter-spacing: 0.5em; 
+               font-family: Arial, Helvetica, sans-serif; width: 97%; 
+               font-size: 1.5em; margin: 0px; text-align: right; 
+               border: 1px solid black}
+
+   #para      {font-size: 1em; border: 1px solid black; width: 97%;
+               background-color: ivory}
+   #para p    {margin: 8px}
+
+   #demo_container {position: relative; top: 10px; left: 0px; width: 100%;
+                    margin: 0px 10px}
+   #demo_footer {text-align: center; font-size: 8pt; border-top: 1px solid black; 
+                 margin: 25px 10px; width: 97%; clear: left; position: relative;
+                 top: 10px; left: 0px}
+   span.btitle {font-style: italic}
+
+/* styles specific to this demo */
+   #demo_container table {float: left; width: 440px}
+   #styleoptions {font-family: Arial, Helvetica, sans-serif; font-size: 0.8em}
+   th, td {vertical-align: top;}
+   input.preview {background-color: white;}
+   input.red {color: black; background-color: rgb(255, 155, 155); text-align: right}
+   input.green {color: black; background-color: rgb(155, 255, 155); text-align: right}
+   input.blue {color: black; background-color: rgb(155, 155, 255); text-align: right}
+
+   #output {width: 510px; float: left; margin-bottom: 10px}
+
+   #preview {width: 100%; height: 250px; border: 1px solid black; 
+             padding: 5px;
+   }
+   #previewstyle {width: 100%; border: 1px solid black; font-family: monospace; padding: 5px; font-size: 0.9em;}
+   #demo_container h4 {color: white; background-color: black; margin-top: 0px; margin-bottom: 0px; width: 100%; 
+                       border: 1px solid black; padding: 5px; font-family: Arial, Helvetica, sans-serif}
+</style>
+
+<script type="text/javascript">
+
+function gVS(fid) {
+   var fIndex=document.forms[0].elements[fid].selectedIndex;
+   var fVal=document.forms[0].elements[fid].options[fIndex].value;
+   return fVal;
+}
+
+function gV(fid) {
+   var fVal=document.getElementById(fid).value;
+   return fVal;
+}
+
+function setstyles() {
+   styletable=document.stylelist;
+   previewObject=document.getElementById("preview");
+
+   var rgtext="radial-gradient(";
+
+   var centerPos="";
+   if (gVS("x1p")!="" || gV("y1p")!="") {
+      centerPos+=gVS("x1p")+" "+gVS("y1p");
+   } else {
+      if (gV("x1")!="") {
+         centerPos+=gV("x1");
+         if (gVS("x1unit")=="") {centerPos+="px ";} else {centerPos+=gVS("x1unit")+" ";}
+      }
+      if (gV("y1")!="") {
+         centerPos+=gV("y1");
+         if (gVS("y1unit")=="") {centerPos+="px";} else {centerPos+=gVS("y1unit");}
+      }
+   }
+   if (centerPos!="") centerPos+=", ";
+   rgtext+=centerPos;
+
+
+   var shapesize="";
+   if (gVS("shape")!="") shapesize+=gVS("shape")+" ";
+
+   if (gVS("size")!="") {
+      shapesize+=gVS("size");
+   } else {
+      if (gV("sizex")!="") {
+         shapesize+=gV("sizex");
+         if (gVS("sizexunit")=="") {shapesize+="px ";} else {shapesize+=gVS("sizexunit")+" ";}
+      }
+      if (gV("sizey")!="") {
+         shapesize+=gV("sizey");
+         if (gVS("sizeyunit")=="") {shapesize+="px";} else {shapesize+=gVS("sizeyunit");}
+      }
+   }
+   if (shapesize!="") shapesize+=", ";
+   rgtext+=shapesize;
+
+
+   if ((gV("red1")!= "") && (gV("green1")!="") && (gV("blue1")!="")) {
+      rgtext+="rgb("+gV("red1")+","+gV("green1")+","+gV("blue1")+") ";
+      document.getElementById("preview1").style.backgroundColor="rgb("+gV("red1")+","+gV("green1")+","+gV("blue1")+")";
+
+      if (gV("p1")!="") {
+         if (gVS("punit1")!="") rgtext+=gV("p1")+gVS("punit1")
+         else rgtext+=gV("p1")+"px";
+      }
+   }
+
+   if ((gV("red2")!= "") && (gV("green2")!="") && (gV("blue2")!="")) {
+      rgtext+=", rgb("+gV("red2")+","+gV("green2")+","+gV("blue2")+") ";
+      document.getElementById("preview2").style.backgroundColor="rgb("+gV("red2")+","+gV("green2")+","+gV("blue2")+")";
+
+      if (gV("p2")!="") {
+         if (gVS("punit2")!="") rgtext+=gV("p2")+gVS("punit2")
+         else rgtext+=gV("p2")+"px";
+      }
+   }
+
+   if ((gV("red3")!= "") && (gV("green3")!="") && (gV("blue3")!="")) {
+      rgtext+=", rgb("+gV("red3")+","+gV("green3")+","+gV("blue3")+") ";
+      document.getElementById("preview3").style.backgroundColor="rgb("+gV("red3")+","+gV("green3")+","+gV("blue3")+")";
+
+      if (gV("p3")!="") {
+         if (gVS("punit3")!="") rgtext+=gV("p3")+gVS("punit3")
+         else rgtext+=gV("p3")+"px";
+      }
+   }
+
+   if ((gV("red4")!= "") && (gV("green4")!="") && (gV("blue4")!="")) {
+      rgtext+=", rgb("+gV("red4")+","+gV("green4")+","+gV("blue4")+") ";
+      document.getElementById("preview4").style.backgroundColor="rgb("+gV("red4")+","+gV("green4")+","+gV("blue4")+")";
+
+      if (gV("p4")!="") {
+         if (gVS("punit4")!="") rgtext+=gV("p4")+gVS("punit4")
+         else rgtext+=gV("p4")+"px";
+      }
+   }
+
+
+   if ((gV("red5")!= "") && (gV("green5")!="") && (gV("blue5")!="")) {
+      rgtext+=", rgb("+gV("red5")+","+gV("green5")+","+gV("blue5")+") ";
+      document.getElementById("preview5").style.backgroundColor="rgb("+gV("red5")+","+gV("green5")+","+gV("blue5")+")";
+
+      if (gV("p5")!="") {
+         if (gVS("punit5")!="") rgtext+=gV("p5")+gVS("punit5")
+         else rgtext+=gV("p5")+"px";
+      }
+   }
+
+
+   rgtext+=")";
+   stext="background: -o-"+rgtext+"; ";
+   stext+="background: -ms-"+rgtext+"; ";
+   stext+="background: -moz-"+rgtext+"; ";
+   stext+="background: -webkit-"+rgtext+"; ";
+   stext+="background: "+rgtext+"; ";
+
+   stext2="background: -o-"+rgtext+"; <br /><br />";
+   stext2+="background: -ms-"+rgtext+"; <br /><br />";
+   stext2+="background: -moz-"+rgtext+"; <br /><br />";
+   stext2+="background: -webkit-"+rgtext+"; <br /><br />";
+   stext2+="background: "+rgtext+"; ";
+
+
+   previewObject.setAttribute("style", stext);
+
+   document.getElementById("previewstyle").innerHTML=stext2; 
+}
+
+</script>
+
+</head>
+
+<body>
+<form id="stylelist" name="stylelist">
+<div id="demo_page">
+
+<div id="demo_intro">
+   <table>
+   <tr><td style="width: 50%"><img src="cengage.jpg" alt="Course Technology Cengage Learning" /></td>
+       <td style="width: 50%; text-align:right; font-family: Arial, Helvetica, sans-serif; font-size: 14pt">
+          New Perspectives on HTML and CSS<br />Tutorial 8
+   </td></tr>
+   </table>
+
+   <h2 id="h2heading">Radial Gradients </h2>
+   <div id="para">
+      <p>This demo shows how to create a background gradient using the CSS3 <code>radial-gradient()</code>
+         function. The syntax of the function is:
+      </p>
+      <p>
+         <code>radial-gradient(<i>center</i>, <i>shape size</i>, <i>color-stop</i>, <i>color-stop</i> ...)</code>
+      </p>
+      <p>where <i>center</i> is the position of the radial gradient's center, <i>shape</i> is the shape 
+         of the gradient (<code>circle</code> or <code>ellipse</code>), <i>size</i> is the size of 
+         the gradient from the center point, and <i>color-stop</i> are the colors and positions of each
+         color in the gradient. If no position is specified, the colors are even distributed across the
+         object background.
+      </p>
+      <p>To use the demo, enter the starting position <i>or</i> the angle of the gradient and specify the
+         RGB color value and position of each color. Press the Tab key to display the change.
+         Positions can be expressed in pixels or percentages.
+         If you omit the center position, the radial gradient will be placed at the horizontal and
+         vertical center of the object. Up to 
+         five different colors can be specified. You must specify at least two color values.
+      </p>
+      <p>Note that the <code>radial-gradient()</code> function is supported by: Internet Explorer version 10 and higher, Opera version 11.1 and higher, Chrome version 10 and higher, Safari version 4 and higher, and Firefox version 3.6 and higher.</p>
+   </div>
+</div>
+
+<div id="demo_container">
+
+   <table id="styleoptions">
+   <tr>
+      <td>Radial Center:</td>
+      <td><select name="x1p" id="x1p" onchange="setstyles()">
+             <option value=""></option>
+             <option value="left">left</option>
+             <option value="center">center</option>
+             <option value="right ">right</option>
+          </select>
+          <select name="y1p" id="y1p" onchange="setstyles()">
+             <option value=""></option>
+             <option value="top">top</option>
+             <option value="center">center</option>
+             <option value="bottom">bottom</option>
+          </select>
+          <br /><br />
+          or specify the center using <br />pixels or percentages
+          <br /><br />
+          ( <input name="x1" id="x1" size="3" onblur="setstyles()" />
+          <select name="x1unit" id="x1unit" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select> , 
+          <input name="y1" id="y1" size="3" onblur="setstyles()" />
+          <select name="y1unit" id="y1unit" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select> ) 
+      </td>
+    </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+    <tr>
+      <td>
+          Shape: 
+      </td>
+      <td>
+          <select name="shape" id="shape" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="ellipse">ellipse</option>
+             <option value="circle">circle</option>
+          </select>
+      </td>
+   </tr>
+    <tr>
+      <td>
+          Size: 
+      </td>
+      <td>
+          <select name="size" id="size" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="closest-side">closest-side</option>
+             <option value="closest-corner">closest-corner</option>
+             <option value="farthest-side">farthest-side</option>
+             <option value="farthest-corner">farthest-corner</option>
+             <option value="contain">contain</option>
+             <option value="cover">cover</option>
+          </select>
+          <br /><br />
+          or in place of the shape and size keywords, <br />
+          specify the size of the radial gradient using <br />pixels or percentages
+          <br /><br />
+          ( <input name="sizex" id="sizex" size="3" onblur="setstyles()" />
+          <select name="sizexunit" id="sizexunit" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+          , 
+          <input name="sizey" id="sizey" size="3" onblur="setstyles()" />
+          <select name="sizeyunit" id="sizeyunit" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select> )
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 1: (rgb)</td>
+      <td>( <input type="text" name="red1" id="red1" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green1" id="green1" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue1" id="blue1" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview1" id="preview1" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p1" id="p1" size="3" onblur="setstyles()" />
+          <select name="punit1" id="punit1"onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 2: (rgb)</td>
+      <td>( <input type="text" name="red2" id="red2" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green2" id="green2" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue2" id="blue2" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview2" id="preview2" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p2" id="p2" size="3" onblur="setstyles()" />
+          <select name="punit2" id="punit2"onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 3: (rgb)</td>
+      <td>( <input type="text" name="red3" id="red3" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green3" id="green3" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue3" id="blue3" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview3" id="preview3" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p3" id="p3" size="3" onblur="setstyles()" />
+          <select name="punit3" id="punit3" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 4: (rgb)</td>
+      <td>( <input type="text" name="red4" id="red4" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green4" id="green4" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue4" id="blue4" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview4" id="preview4" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p4" id="p4" size="3" onblur="setstyles()" />
+          <select name="punit4" id="punit4" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2"><hr /></td>
+   </tr>
+   <tr>
+      <td>Color 5: (rgb)</td>
+      <td>( <input type="text" name="red5" id="red5" class="red" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="green5" id="green5" class="green" size="3" value="" onblur="setstyles()" /> , 
+            <input type="text" name="blue5" id="blue5" class="blue" size="3" value="" onblur="setstyles()" /> )
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="preview5" id="preview5" size="3" disabled class="preview" />
+      </td>
+   </tr>
+   <tr>
+      <td>Color-Stop</td>
+      <td><input name="p5" id="p5" size="3" onblur="setstyles()" />
+          <select name="punit5" id="punit5" onchange="setstyles()" >
+             <option value=""></option>
+             <option value="px">px</option>
+             <option value="%">%</option>
+          </select>
+      </td>
+   </tr>
+   </table>
+
+   <div id="output">
+
+      <h4>Preview</h4>
+
+      <div id="preview">
+      </div>
+
+      <h4>Style</h4>
+  
+      <div id="previewstyle">
+         none
+      </div>
+
+   </div>
+</div>
+
+<div id="demo_footer">
+   Carey, P.
+   <span class="btitle">New Perspectives on HTML and CSS</span>,
+   Course Technology: Boston, 2012.
+</div>
+
+</div>
+</form>
+
+</body>
+</html>
+
+
