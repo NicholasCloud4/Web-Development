@@ -1,0 +1,106 @@
+/*
+   New Perspectives on HTML and CSS
+   Tutorial 4
+   Case Problem 1
+
+   History Style Sheet
+   Author: Nicholas Dhannie
+   Date:   6-4-2021
+
+   Filename:         history.css
+   Supporting Files: 
+
+*/
+
+/*Blocks*/
+header section nav{
+	display:block;
+}
+
+/*Padding*/
+*{
+	padding:0px;
+	margin:0px;
+}
+
+header{
+	background-color:rgb(51,51,51);
+	text-align:center;
+	width:55em;
+}
+
+header img{
+	height:4em;
+}
+
+/*Nav*/
+nav{
+	float:left;
+	width:15em;
+	background-color:rgb(51,51,51);
+}
+
+nav ul li{
+	font-family:'Century Gothic',sans-serif;
+	font-size:0.7em;
+	list-style-type:none;
+	line-height:1.4em;
+	margin-left:1em;
+	margin-bottom:1.2em;
+}
+
+nav ul li a{
+	color:rgb(212,212,212);
+	text-decoration:none;
+}
+
+nav ul li a:hover{
+	color:white;
+}
+
+/*Speech*/
+#speech{
+	background-color:rgb(212,212,212);
+	width:40em;
+	float:left;
+	font-family:'Palatino Linotype','Book Antiqua',Palatino,serif;
+}
+
+#speech h1{
+	background-color:rgb(51,51,51);
+	color:rgb(212,212,212);
+	font-size:2em;
+	text-align:center;
+}
+
+#speech p{
+	font-size:0.9em;
+	margin:1em;
+	line-height:1.300
+	
+}
+
+/*Dropcap*/
+#speech p:first-of-type:first-letter{
+	float:left;
+	font-size:4em;
+	line-height:0.8em;
+	margin-right:0.3em;
+	padding-right:0.2em;
+	padding-bottom:0.2em;
+	border-style:solid;
+	border-color:black;
+	border-left:0.02em;
+	border-top:0.02em;
+}
+
+section p:first-of-type:first-line{
+	text-transform:uppercase;
+}
+
+#speech img{
+	float:right;
+	clear:right;
+	height:4em;
+}
+	
