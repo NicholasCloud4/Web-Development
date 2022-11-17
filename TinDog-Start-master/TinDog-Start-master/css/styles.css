@@ -18,6 +18,16 @@ h1 {
   font-weight: 900;
 }
 
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+p {
+  color: #8f8f8f;
+}
+
 /* Navigation Bar */
 .navbar {
   padding: 0 0 4.5rem;
@@ -48,4 +58,23 @@ h1 {
 .phone-img {
   width: 60%;
   transform: rotate(20deg);
+}
+
+/* Features Section */
+#features {
+  padding: 5% 10%;
+}
+
+.feature-box {
+  text-align: center;
+  padding: 5%;
+}
+
+.icon {
+  color: #ef8172;
+  margin-bottom: 1rem;
+}
+
+.icon:hover {
+  color: #ff4c68;
 }
