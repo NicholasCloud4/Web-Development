@@ -1,0 +1,27 @@
+.img-fluid {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.feature {
+  padding: 20px;
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #3498db; /* Border for icon */
+  border-radius: 50%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #3498db; /* Control button color */
+}
+
+.carousel-indicators button {
+  background-color: #3498db; /* Indicator color */
+}
+
+.text-body-secondary {
+  color: #6c757d; /* Adjust text color for better visibility */
+}
